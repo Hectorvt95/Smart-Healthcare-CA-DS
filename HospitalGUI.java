@@ -9,6 +9,7 @@ import grpc.generated.SmartMonitor.*;
 
 import io.grpc.stub.StreamObserver;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -16,7 +17,10 @@ import javax.swing.JTextArea;
  */
 public class HospitalGUI extends javax.swing.JFrame {
     
+    
     HospitalClient hospitalClient;
+    RKCServer unaryServer;
+    
     StreamObserver<RoomRequest> requestObserver;
     
     public HospitalGUI() {
@@ -24,8 +28,16 @@ public class HospitalGUI extends javax.swing.JFrame {
         initComponents();
         
         hospitalClient = new HospitalClient();
+        
         jTextField2.setText("Enter the room you want to request");
         
+        
+    }
+    
+    public void appendRKCServerText(String message){
+        
+        SwingUtilities.invokeLater(() -> jTextArea4.append(message + "\n"));
+        //this.jTextArea4.setText(message);
         
     }
 

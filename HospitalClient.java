@@ -177,7 +177,7 @@ public class HospitalClient {
                 requestObserver.onNext(RoomRequest.newBuilder().setRoomName(roomName.toLowerCase()).build());  //this is going to be taken from the gui
                 SwingUtilities.invokeLater(() -> textArea.append("Client called the server for the Neonatal Intensive Care Unit Values \n"));
                 System.out.println("Client called the server for the Neonatal Intensive Care Unit Values");
-                //Thread.sleep(500);
+                Thread.sleep(500);
                 
             }else{
                 SwingUtilities.invokeLater(() -> textArea.append("No Such Room Exception: Unexistent Room \n"));

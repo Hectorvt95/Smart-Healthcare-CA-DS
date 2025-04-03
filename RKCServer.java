@@ -22,35 +22,44 @@ import java.util.logging.Logger;
 public class RKCServer extends RoomKeyControlsImplBase {
     
     private static final Logger logger = Logger.getLogger(RKCServer.class.getName());
+    private HospitalGUI gui;
+    
+    public RKCServer(HospitalGUI gui){
+        this.gui = gui;
+    }
 
-	public static void main(String[] args) {
-		
+    public static void main(String[] args) {
+            
+            HospitalGUI gui = new HospitalGUI();
+            gui.setVisible(true);
+            
+            RKCServer Serviceserver = new RKCServer(gui);
 
-		RKCServer Serviceserver = new RKCServer();
-		
-		int port = 50052;
-	    
-		try {
-			Server server = ServerBuilder.forPort(port)
-			    .addService(Serviceserver)
-			    .build()
-			    .start();
-			 logger.info("Server started, listening on " + port);
-                         
-	         System.out.println(" Server started, listening on " + port);		   
-			 server.awaitTermination();
+            int port = 50052;
 
-			 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-	   
-	}
+            try {
+                    Server server = ServerBuilder.forPort(port)
+                        .addService(Serviceserver)
+                        .build()
+                        .start();
+                     logger.info("Server started, listening on " + port);
+                     
+                     String message = "Server started, listening on " + port;
+                     //System.out.print(message);
+                     gui.appendRKCServerText(message);
+                     server.awaitTermination();
+
+
+            } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+
+            } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+            } 
+
+    }
         
  
     
@@ -68,7 +77,8 @@ public class RKCServer extends RoomKeyControlsImplBase {
            
             public void onNext(RoomRequest request) {
 
-                System.out.println(LocalTime.now().toString() + ": received a message: " + request.getRoomName());
+                String message = (LocalTime.now().toString() + ": received a message: " + request.getRoomName());
+                gui.appendRKCServerText(message);
                
                 int [] roomsValue = (int []) room.getRoomValues(request.getRoomName());
                 
