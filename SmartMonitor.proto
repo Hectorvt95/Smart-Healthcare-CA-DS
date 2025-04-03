@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "grpc.generated.SmartMonitor";
+option java_outer_classname = "SmartMonitorImpl";
+
+package SmartMonitor;
+
+// The service definition.
+// The server that you implement must extend the class  <servicename>ImplBase
+// so in this example you will create a server class that extends ---> SmartMonitorImplBase
+
+// SmartMonitor manages the patients temperature, blood pressure, hearth rate, carbon dioxide levels and respiration rate.
+
+// There is a monitor that is reading different values and if there is something wrong it will call bell immediately ---> Smart Healthcare system IoT;
+// values: temperature, blood pressure, hearth rate
+
+service SmartMonitor {
+
+//for each patient in the emergency room, we have triage and there we implement a device that allows the client to send data that is been read by 
+//the server and if there is anything wrong it will call the fast response team;
+
+  rpc SmartPatientMonitor(stream PatientData) returns(Validation) {}
+
+}
+
+   //  message identifying a location
+   message PatientData {
+    int32  room_number = 1;
+    string  patient_name = 2;
+    int32   temperature = 3;
+    int32   blood_pressure = 4;
+    int32   elect_rate = 5;
+   }
+
+   // The response message containing answer from the server
+   message Validation {
+     string message = 1;
+   }
+ 
+   
+

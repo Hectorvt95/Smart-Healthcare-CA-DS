@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "grpc.generated.RoomKeyControls";
+option java_outer_classname = "RoomKeyControlsImpl";
+
+package RoomKeyControls;
+
+// The service definition.
+// The server that you implement must extend the class  <servicename>ImplBase
+// so in this example you will create a server class that extends ---> RoomKeyControlsImplBase
+
+// RoomKeyControls manages the room temperature and humidity.
+
+// There are thermostats in each test room that can monitor the temperature and the humidity live this will bi BI DIR
+// These rooms are: Neonatal Intensive Care Unit, Microbiology, Hematology, Molecular Diagnostics, Sterile Storage, Operating Theater, Patient Rooms and Pharmaceutical Storage
+//https://www.hpsc.ie/a-z/environmentandhealth/guidance/heatwaves/indoortemperaturecontrol/
+
+service RoomKeyControls {
+
+  // for a specific location get a stream of updates about the current temperature and humidity
+  //for the temperature of the test rooms, the server will stream updates about the 
+  //current temperatures to populate a chart on a dashboard 
+
+  rpc RoomControlConditions(stream RoomRequest) returns (stream RoomConditions) {}
+  
+}
+
+   //  message identifying a location
+   message RoomRequest {
+     string room_name = 1;
+   }
+
+   // The response message containing answer from the server
+   message RoomConditions {
+     double temp = 1;
+     int32  humidity = 2;
+   }
+ 
+   
+

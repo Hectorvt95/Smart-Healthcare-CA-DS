@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "grpc.generated.PatientsRoomControl";
+option java_outer_classname = "PatientsRoomControlImpl";
+
+package PatientsRoomControl;
+
+// The service definition.
+// The server that you implement must extend the class  <servicename>ImplBase
+// so in this example you will create a server class that extends ---> PatientsRoomControlImplBase
+
+// LightControl manages the rooms light, it turns it on or off.
+// There is a button in a screen where you can press and the light will turn on or off  <unary>
+//
+
+service PatientsRoomControl {
+
+//for each patient room, we have a specific client and a single server that controls the light, when he turns it on or off from his phone;
+// so the server sends a response to a smart bulb which works with 1s and 0s
+
+  rpc LightControl (LightRequest) returns (LightResponse) {}
+
+  rpc BedHeight (HeightRequest) returns (HeightResponse) {}
+
+  rpc CourtainsGap (GapRequest) returns (GapResponse) {}
+
+}
+
+// for the light setting
+message LightRequest {
+    int32 light_request = 1;
+}
+// The response message containing answer from the server
+message LightResponse {
+    string light_response = 1;
+}
+
+
+// for the bed's height setting
+message HeightRequest {
+    int32 height_request = 1;
+}
+
+message HeightResponse {
+    string height_response = 1;
+}
+
+
+// for the courtainsGap
+message GapRequest {
+    int32 courtains_request = 1;
+}
+
+message GapResponse {
+    string courtains_response = 1;
+}
+   
+
